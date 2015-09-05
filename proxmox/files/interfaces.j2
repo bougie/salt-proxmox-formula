@@ -1,0 +1,27 @@
+auto lo
+iface lo inet loopback
+
+{% for ifx in salt['grains.get']('ip_interfaces') %}
+	{%- if not ifx == 'lo' and ifx.startswith('eth') %}
+iface {{ifx}} inet manual
+	{%- endif -%}
+{% endfor %}
+
+{% for interface_name, interface_config in networks.items() %}
+auto {{interface_name}}
+	{%- if interface_config.address == 'dhcp' or interface_config.address == 'manual' %}
+iface {{interface_name}} inet {{interface_config.address}}
+	{%- else %}
+iface {{interface_name}} inet static
+	address {{interface_config.address}}
+	netmask {{interface_config.netmask}}
+	gateway {{interface_config.gateway}}
+	{% endif %}
+	{% if interface_config.ports is defined -%}
+	bridge_ports {{interface_config.ports}}
+	{% else %}
+	bridge_ports none
+	{% endif -%}
+	bridge_stp off
+	bridge_fd 0
+{% endfor %}

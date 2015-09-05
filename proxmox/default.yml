@@ -1,0 +1,4 @@
+{% load_yaml as rawmap %}
+preconfigure: True
+management_interface: 'eth0'
+{% endload %}

@@ -1,0 +1,9 @@
+proxmox:
+    networks:
+        vmbr0:
+            address: 13.37.42.69
+            netmask: 255.0.0.0
+            gateway: 13.0.0.1
+            ports: eth0
+        vmbr1:
+            address: manual
