@@ -20,3 +20,8 @@ hosts_file:
         - context:
             networks: {{rawmap.networks}}
 {% endif %}
+
+cgroups_fstab_file:
+    file.managed:
+        - name: /etc/fstab.d/cgroup.fstab
+        - source: salt://proxmox/files/fstab.d.cgroup
