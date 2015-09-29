@@ -15,7 +15,9 @@ iface {{interface_name}} inet {{interface_config.address}}
 iface {{interface_name}} inet static
 	address {{interface_config.address}}
 	netmask {{interface_config.netmask}}
+		{%- if interface_config.gateway is defined %}
 	gateway {{interface_config.gateway}}
+		{%- endif -%}
 	{% endif %}
 	{% if interface_config.ports is defined -%}
 	bridge_ports {{interface_config.ports}}
