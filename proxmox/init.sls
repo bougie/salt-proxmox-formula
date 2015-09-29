@@ -1,4 +1,4 @@
-# maste state for promox
+# master state for promox
 
 include:
     - proxmox.install
