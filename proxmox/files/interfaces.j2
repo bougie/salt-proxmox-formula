@@ -9,12 +9,16 @@ iface {{ifx}} inet manual
 
 {% for interface_name, interface_config in networks.items() %}
 auto {{interface_name}}
-	{%- if interface_config.address == 'dhcp' or interface_config.address == 'manual' %}
+	{%- if interface_config.address is defined and (interface_config.address == 'dhcp' or interface_config.address == 'manual') %}
 iface {{interface_name}} inet {{interface_config.address}}
 	{%- else %}
 iface {{interface_name}} inet static
+		{% if interface_config.address is defined -%}
 	address {{interface_config.address}}
+		{% endif %}
+		{% if interface_config.netmask is defined -%}
 	netmask {{interface_config.netmask}}
+		{% endif %}
 		{%- if interface_config.gateway is defined %}
 	gateway {{interface_config.gateway}}
 		{%- endif -%}
