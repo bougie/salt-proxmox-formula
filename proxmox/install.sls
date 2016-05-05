@@ -1,5 +1,5 @@
 {% from "proxmox/default.yml" import rawmap with context %}
-{% set rawmap = salt['pillar.get']('proxmox', rawmap, merge=True) %}
+{% set rawmap = salt['pillar.get']('proxmox', rawmap) %}
 
 {% if rawmap.preconfigure is defined and rawmap.preconfigure %}
 include:
